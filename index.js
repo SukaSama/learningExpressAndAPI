@@ -31,8 +31,20 @@ app.route('/:identificador').delete((req,res)=>{
 })
 */
 
-app.route('/').post((req,res)=>{
+
+//BODY PARAMS (transformar tudo em json)
+app.route('/').post((req,res)=>{//get não tem body, somente put,post e patch possuem body
     let {name,idade,livros,filmes} = req.body
     res.send(`Meu nome é ${name} e minha idade é ${idade}!
     Meus livros favoritos são ${livros[0]}, ${livros[1]} e ${livros[2]}`)
 })
+
+//ROUTE PARAMS
+//app.route('/').get((req,res)=> res.send("oi"))//necessário ter um get sem parâmetros pra funcionar os posteriores com parâmetros
+app.route('/:variavel').get((req,res)=> res.send(req.params.variavel))
+app.route('/identidade/:nome').get((req,res)=> res.send(req.params.nome))//necessário ter definido uma rota para ter a possibilidade de ter um caminho distinto e um parâmetro
+
+//QUERY PARAMS
+//app.route('/').get((req,res)=> res.send(req.query)) // exibe o objeto em JSON com todas as informações da query (verificar a rota no insomnia com =name=SUenny&cidade=...)
+app.route('/').get((req,res)=> res.send(req.query.cidade))
+app.route('/about/users').get((req,res)=> res.send(req.query))
